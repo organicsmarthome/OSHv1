@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+OrganicSmartHome [Version 1.0] is a framework for energy management in intelligent buildings
+Copyright (C) 2011  Florian Allerding (florian.allerding@kit.edu)
+
+
+This file is part of the OrganicSmartHome.
+
+OrganicSmartHome is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the Free Software Foundation, 
+either version 3 of the License, or (at your option) any later version.
+
+OrganicSmartHome is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with OrganicSmartHome.  
+
+If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/ObserverDataStorage" xmlns:tns="http://www.example.org/ObserverDataStorage" elementFormDefault="qualified">
+
+<element name="ObserverDateStorage">
+	<complexType>
+		<sequence>
+			<element name="sesons" type="tns:Season" minOccurs="1" maxOccurs="unbounded"></element>
+		</sequence>
+	</complexType>
+</element>
+
+<complexType name="IDeviceGeneric">
+<sequence>
+	<element name="deviceID" type="string"></element>
+	<element name="weekdays" minOccurs="7" maxOccurs="7" type="tns:Weekday"></element>
+</sequence>
+</complexType>
+
+<complexType name="IAppliance">
+<complexContent>
+<extension base="tns:IDeviceGeneric">
+	<sequence>
+		
+		
+	</sequence>
+</extension>
+
+</complexContent>
+
+</complexType>
+
+<complexType name="Season">
+	<sequence>
+		<element type="tns:Seasons" name="seasonType"></element>
+		<element minOccurs="0" maxOccurs="unbounded" type="tns:IAppliance" name="assignedAplliances"></element>
+	</sequence>
+
+</complexType>
+
+<simpleType name="Seasons">
+	<restriction base="string">
+		<enumeration value="SUMMER"></enumeration>
+		<enumeration value="WINTER"></enumeration>
+		<enumeration value="MIDDLESEASON"></enumeration>
+		<enumeration value="SPRING"></enumeration>
+		<enumeration value="FALL"></enumeration>
+	</restriction>
+</simpleType>
+
+<complexType name="Weekday">
+	<sequence>
+		<element type="tns:Weekdays" name="day"></element>
+		<element minOccurs="0" maxOccurs="unbounded" name="applianceActionsSlot" type="tns:TimeSlot"></element>
+	</sequence>
+</complexType>
+
+<complexType name="TimeSlot">
+	<sequence>
+		<element name="TimeSlotNumber" type="int"></element>
+		<element name="timeFrom" type="long"></element>
+		<element name="timeTo" type="long"></element>
+		<element minOccurs="0" maxOccurs="unbounded" name="actions" type="tns:ObservedAction"></element>
+	</sequence>
+</complexType>
+
+<simpleType name="Weekdays">
+	<restriction base="string">
+		<enumeration value="SU"></enumeration>
+		<enumeration value="MO"></enumeration>
+		<enumeration value="TU"></enumeration>
+		<enumeration value="WE"></enumeration>
+		<enumeration value="TH"></enumeration>
+		<enumeration value="FR"></enumeration>
+		<enumeration value="SA"></enumeration>
+	</restriction>
+</simpleType>
+
+<complexType name="ObservedAction">
+	<sequence>
+		<element name="deviceID" type="string"></element>
+		<element name="timeStamp" type="long"></element>
+		<element name="actionOccurrd" type="boolean"></element>
+	</sequence>
+</complexType>
+
+<complexType name="ObservedApplianceAction">
+	<complexContent>
+		<extension base="tns:ObservedAction">
+			<sequence>
+			<element name="startRunning" type="boolean"></element>
+			<element name="stopRunning" type="boolean"></element>
+			<element name="Programmed" type="boolean"></element>
+			</sequence>
+		</extension>
+	</complexContent>
+</complexType>
+
+<complexType name="ObservedSmartPlugAction">
+	<complexContent>
+		<extension base="tns:ObservedAction">
+			<sequence>
+			<element name="startRunning" type="boolean"></element>
+			<element name="stopRunning" type="boolean"></element>
+			<element name="changedPowerValue" type="boolean"></element>
+			<element name="currentPowerValue" type="int"></element>
+			</sequence>
+		</extension>
+	</complexContent>
+</complexType>
+
+</schema>

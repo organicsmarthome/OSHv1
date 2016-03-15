@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+OrganicSmartHome [Version 1.0] is a framework for energy management in intelligent buildings
+Copyright (C) 2011  Florian Allerding (florian.allerding@kit.edu)
+
+
+This file is part of the OrganicSmartHome.
+
+OrganicSmartHome is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the Free Software Foundation, 
+either version 3 of the License, or (at your option) any later version.
+
+OrganicSmartHome is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with OrganicSmartHome.  
+
+If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/VirualIDeviceProfile" xmlns:tns="http://www.example.org/VirualIDeviceProfile" elementFormDefault="qualified">
+<element name="DeviceProfile">
+	<complexType>
+	<sequence>
+		<element name="deviceUUID" type="string"></element>
+		<element name="deviceType" type="tns:DeviceTypes"></element>
+		<element name="deviceDescription" type="string"></element>
+		<element name="hasProfile" type="boolean"></element>
+		<element name="Intelligent" type="boolean"></element>
+		<element name="profileTicks" minOccurs="0" maxOccurs="unbounded" type="tns:ProfileTick"></element>
+	</sequence>
+	</complexType>
+</element>
+<simpleType name="DeviceTypes">
+	<restriction base="string">
+		<enumeration value="APPLIANCE"></enumeration>
+		<enumeration value="CHPPLANT"></enumeration>
+		<enumeration value="ECAR"></enumeration>
+		<enumeration value="AIRCONDITION"></enumeration>
+		<enumeration value="BOILER"></enumeration>
+		<enumeration value="SMARTMETER"></enumeration>
+		<enumeration value="PROVIDERPROXY"></enumeration>
+		<enumeration value="CUSTOM"></enumeration>
+	</restriction>
+</simpleType>
+
+<complexType name="ProfileTick">
+	<sequence>
+		<element name="activePower" type="int"></element>
+		<element name="reactivePower" type="int"></element>
+		<element name="deviceStateName" type="string"></element>
+		<element name="parameters" minOccurs="0" maxOccurs="unbounded">
+			<complexType>	
+					<sequence>
+						<element name="parameterName"></element>
+						<element name="parameterValue"></element>
+					</sequence>
+			</complexType>
+		</element>
+	</sequence>
+</complexType>
+</schema>
